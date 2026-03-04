@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PromptBuilder from "./PromptBuilder.jsx";
 
 const steps = [
   {
@@ -192,9 +193,44 @@ function ParallelCard({ step }) {
   );
 }
 
+const NAV_TABS = [
+  { id: "flow", label: "🚀 系統流程圖" },
+  { id: "prompt", label: "🧠 Step 1 Prompt Builder" },
+];
+
 export default function ZTOAFlow() {
+  const [activeTab, setActiveTab] = useState("flow");
+
+  if (activeTab === "prompt") return (
+    <>
+      <nav style={{ background: "#0d1120", borderBottom: "1px solid #1e2a45", padding: "10px 20px", display: "flex", gap: 8, position: "sticky", top: 0, zIndex: 100 }}>
+        {NAV_TABS.map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+            background: activeTab === t.id ? "linear-gradient(135deg,#6c63ff,#00d4ff)" : "transparent",
+            border: activeTab === t.id ? "none" : "1px solid #1e2a45",
+            borderRadius: 8, padding: "7px 16px", color: activeTab === t.id ? "#fff" : "#7a85a8",
+            fontSize: ".78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Segoe UI','PingFang TC',sans-serif",
+          }}>{t.label}</button>
+        ))}
+      </nav>
+      <PromptBuilder />
+    </>
+  );
+
   return (
     <div style={{ fontFamily: "'Segoe UI','PingFang TC',sans-serif", background: "#0a0e1a", color: "#e0e6ff", minHeight: "100vh", padding: "36px 20px" }}>
+
+      {/* Nav Tabs */}
+      <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 36 }}>
+        {NAV_TABS.map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+            background: activeTab === t.id ? "linear-gradient(135deg,#6c63ff,#00d4ff)" : "transparent",
+            border: activeTab === t.id ? "none" : "1px solid #1e2a45",
+            borderRadius: 8, padding: "7px 18px", color: activeTab === t.id ? "#fff" : "#7a85a8",
+            fontSize: ".78rem", fontWeight: 600, cursor: "pointer", fontFamily: "'Segoe UI','PingFang TC',sans-serif",
+          }}>{t.label}</button>
+        ))}
+      </div>
 
       <div style={{ textAlign: "center", marginBottom: 44 }}>
         <h1 style={{ fontSize: "1.9rem", fontWeight: 800, background: "linear-gradient(135deg,#6c63ff,#00d4ff,#ff6b9d)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", letterSpacing: 2 }}>
